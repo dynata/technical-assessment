@@ -1,7 +1,7 @@
 # Introduction
 For this technical assessment you will be asked to write an implementation of a custom protocol for signing HTTP requests.
 
-You may write your implementation using any programming language that you are comfortable with. The only requirements for the design of your interface are as follows:
+You may write your implementation using any programming language that you are comfortable with as well as any external libraries that are available to you. The only requirements for the design of your interface are as follows:
 
 The interface must accept 3 inputs:
 
