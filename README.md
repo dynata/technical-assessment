@@ -13,6 +13,17 @@ The interface must output 1 string value that is the calculated `Signature` for 
 
 Do not spend too much time on this assessment. If you find yourself working more than a couple of hours, it is absolutely acceptable to come to your interview without a working solution. The primary goal is to display how you approach the solution to a problem, as well as your coding style.
 
+Your solution implementation will be evaluated based on the following attributes:
+
+- **Efficiency**: looking at time and space complexity of implementation.
+- **Completeness**: looking for proper handling of exceptional or edge cases.
+- **Correctness**: looking for expected output for a given input. (can be shown via unit tests)
+- **Readability**: looking for concise, self-describing code. (relevant comments are welcome)
+- **Simplicity**: looking for a simple interface that communicates all necessary information to the client. (encapsulation of complexity)
+- **Ergonomics**: looking for an interface that makes sense and is easy to use.
+
+Your implementation should attempt to handle as many input cases as possible, which may include invalid inputs. When possible, attempt to handle invalid inputs in a reasonable way, otherwise return an error through your interface. For instance, if a given HTTP request frame URI has a query string containing a reserved character that is not percent encoded, you may ignore it on input and encode it properly yourself, when applicable according to the signing protocol, and move on.
+
 Once you have finished your assessment, please have it ready in a way that can be shared with your interviewer(s). Preferably, upload your solution to your personal GitHub (or similar) account as a repository. We will go over your code together during your technical interview.
 
 If you have any questions about the assessment, please do not hesitate to email the recruiter that has been working with you up to this point. They will ensure that an answer gets back to you from the technical team.
@@ -116,6 +127,8 @@ Signature = Lowercase(Hex(HMAC-SHA256(<SigningKey>, <StringToSign>)))
 This `Signature` will be the output of your interface.
 
 ## Examples
+Below are a series of examples that you can use to test your implementation. The examples provided are limited and are not a full representation of all input cases.
+
 All examples will use the following `AccessKey` and `SecretKey`:
 ```text
 AccessKey = AKIAIOSFODNN7EXAMPLE
@@ -135,20 +148,20 @@ Since you will be using the same constant values to produce the signing key, the
 ### Example 1:
 #### HTTP Frame
 ```text
-GET /resource?test=true&mix=1%C2%B11 HTTP/1.1
-Host: test.com
-Timestamp: 2023-08-03T10:24:03.012Z
-
+GET /resource?test=true&mix=1%C2%B11 HTTP/1.1\r\n
+Host: test.com\r\n
+Timestamp: 2023-08-03T10:24:03.012Z\r\n
+\r\n
 ```
 
 #### Canonical Request
 ```text
-GET
-/resource
-mix=1%C2%B11&test=true
-host:test.com
-timestamp:2023-08-03T10:24:03.012Z
-
+GET\n
+/resource\n
+mix=1%C2%B11&test=true\n
+host:test.com\n
+timestamp:2023-08-03T10:24:03.012Z\n
+\n
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 ```
 
@@ -165,25 +178,25 @@ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 ### Example 2:
 #### HTTP Frame
 ```text
-POST /resource//posts?test=true&example=all+please&1234=4321 HTTP/1.1
-Host: test.com
-Choice: A
-Choice: B
-Choice: C
-Content-Length: 25
-
+POST /resource//posts?test=true&example=all+please&1234=4321 HTTP/1.1\r\n
+Host: test.com\r\n
+Choice: A\r\n
+Choice: B\r\n
+Choice: C\r\n
+Content-Length: 25\r\n
+\r\n
 {"some_key":"some_value"}
 ```
 
 #### Canonical Request
 ```test
-POST
-/resource//posts
-1234=4321&example=all%20please&test=true
-choice:A,B,C
-content-length:25
-host:test.com
-
+POST\n
+/resource//posts\n
+1234=4321&example=all%20please&test=true\n
+choice:A,B,C\n
+content-length:25\n
+host:test.com\n
+\n
 43ee763040973ca602549c94c5357a41c280afbb54e48d436af88f4e40d73081
 ```
 
@@ -195,4 +208,37 @@ ee483f641c7ee1da1b2ec2eaa897885f24305bd362a190a0451f2b5d1df3e683
 #### Signature
 ```test
 ca365f9f9b8c6f327d26b8f7ef69cb779b8434eede34b430192de20dd799d755
+```
+
+### Example 3:
+#### HTTP Frame
+```text
+POST /resource/123/comments?test=%FALSE%&evaluation=1±2 HTTP/1.1\r\n
+Host: test.com\r\n
+Content-Length: 69\r\n
+Content-Type: text/plain\r\n
+\r\n
+this is a sentence.\r\nthis sentence is on a new line.\r\nso is this.
+```
+
+#### Canonical Request
+```text
+POST\n
+/resource/123/comments\n
+evaluation=1%C2%B12&test=%EF%BF%BDLSE%25\n
+content-length:69\n
+content-type:text/plain\n
+host:test.com\n
+\n
+bfb541e2301db3522f03fce8248104733842bc5678d0bbf7fcb97f743eb929f3
+```
+
+#### String To Sign
+```text
+a17102d223e9d1aa5d5c51d6e47d61935bc75893c704b684d3cb7f70ee6e8ab7
+```
+
+#### Signature
+```text
+f8d552a43cd85bcb96622cba91c922693e406a97744cad7c222705a900832246
 ```
