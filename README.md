@@ -213,7 +213,7 @@ ca365f9f9b8c6f327d26b8f7ef69cb779b8434eede34b430192de20dd799d755
 ### Example 3:
 #### HTTP Frame
 ```text
-POST /resource/123/comments?test=%FALSE%&evaluation=1±2 HTTP/1.1\r\n
+POST /resource/123/comments?test=%2TRUE%&evaluation=1±2 HTTP/1.1\r\n
 Host: test.com\r\n
 Content-Length: 69\r\n
 Content-Type: text/plain\r\n
@@ -225,7 +225,7 @@ this is a sentence.\r\nthis sentence is on a new line.\r\nso is this.
 ```text
 POST\n
 /resource/123/comments\n
-evaluation=1%C2%B12&test=%EF%BF%BDLSE%25\n
+evaluation=1%C2%B12&test=%252TRUE%25\n
 content-length:69\n
 content-type:text/plain\n
 host:test.com\n
@@ -235,10 +235,10 @@ bfb541e2301db3522f03fce8248104733842bc5678d0bbf7fcb97f743eb929f3
 
 #### String To Sign
 ```text
-a17102d223e9d1aa5d5c51d6e47d61935bc75893c704b684d3cb7f70ee6e8ab7
+e31906fb8b75a30df06ce2ea369e76d449fdbb7dc4dc9d1108e4f8539c490e21
 ```
 
 #### Signature
 ```text
-f8d552a43cd85bcb96622cba91c922693e406a97744cad7c222705a900832246
+44fe20d6e9d666f5a706776ad7b6e668bee72fce6d45ec80acfc4bf7a097bdb3
 ```
