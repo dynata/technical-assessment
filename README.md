@@ -68,7 +68,10 @@ Where:
 
 `CanonicalURI` is the URI-encoded version of the absolute path component of the URI; everything starting with the forward-slash '/' that follows the domain name and up to the end of the string or to the question mark character '?'. Do not normalize the URI path. For instance, do not change "hello//world" to "hello/world".
 
-`CanonicalQueryString` specifies the URI-encoded query string parameters. You URI-encode names and values individually. After encoding, you must also sort the parameters in the canonical query string by parameter name in ascending order of character code point. For example, a parameter name that begins with the uppercase letter F precedes a parameter name that begins with a lowercase letter b.
+`CanonicalQueryString` specifies the URI-encoded query string parameters.
+- Repeated parameter names must be combined into a single parameter before encoding. Concatenate their values into a single string value, separated by commas. Values must be concatenated in the order in which the parameters appear within the query string.
+- URI-encode names and values individually. 
+- After encoding, sort the parameters in the canonical query string by parameter name, in ascending order of character code point. For example, a parameter name that begins with the uppercase letter F precedes a parameter name that begins with a lowercase letter b.
 
 An example query string:
 ```text
@@ -86,7 +89,14 @@ marker=some%20marker&max-keys=20&prefix=somePrefix
 ```
 If the URI does not include any query string parameters, then you will set the canonical query string to an empty string ("").
 
-`CanonicalHeaders` is a list of request headers with their values. Individual header field name and value pairs are separated by the newline character ("\n"). Header field names must use lowercase characters and must be followed by a colon (":"). For the header field values, trim any leading or trailing spaces and separate the values for a multi-value header using commas. You must sort the header field names in ascending order of character code point. The following example shows the format:
+`CanonicalHeaders` is a list of request headers with their values. 
+- Individual header field name and value pairs are separated by the newline character ("\n"). 
+- Header field names must use lowercase characters and must be followed by a colon (":"). 
+- For the header field values, trim any leading or trailing spaces. 
+- Sort the header field names in ascending order of character code point.
+- Repeated header field names must be combined into a single header field. Concatenate their values into a single string value, separated by commas. Values must be concatenated in the order in which the fields appear within the header.
+
+The following example shows the format:
 ```text
 Lowercase(<HeaderName1>)+":"+Trim(<value>)+"\n"
 Lowercase(<HeaderName2>)+":"+Trim(<value>)+"\n"
@@ -178,11 +188,11 @@ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
 ### Example 2:
 #### HTTP Frame
 ```text
-POST /resource//posts?test=true&example=all+please&1234=4321 HTTP/1.1\r\n
+POST /resource//posts?test=2&example=all+please&1234=4321&test=1 HTTP/1.1\r\n
 Host: test.com\r\n
+Choice: C\r\n
 Choice: A\r\n
 Choice: B\r\n
-Choice: C\r\n
 Content-Length: 25\r\n
 \r\n
 {"some_key":"some_value"}
@@ -192,8 +202,8 @@ Content-Length: 25\r\n
 ```test
 POST\n
 /resource//posts\n
-1234=4321&example=all%20please&test=true\n
-choice:A,B,C\n
+1234=4321&example=all%20please&test=2%2C1\n
+choice:C,A,B\n
 content-length:25\n
 host:test.com\n
 \n
@@ -202,12 +212,12 @@ host:test.com\n
 
 #### String To Sign
 ```test
-ee483f641c7ee1da1b2ec2eaa897885f24305bd362a190a0451f2b5d1df3e683
+28fe39b38e2590cbc242dd417f604ca4a6fe91fd9572d8f47520efedd49670e0
 ```
 
 #### Signature
 ```test
-ca365f9f9b8c6f327d26b8f7ef69cb779b8434eede34b430192de20dd799d755
+18e53de99fb8cf5824fc879336a12927dcf7f6d7c42607f87a02a13f690134b1
 ```
 
 ### Example 3:
