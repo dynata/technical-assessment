@@ -226,7 +226,7 @@ this is a sentence.\r\nthis sentence is on a new line.\r\nso is this.
 POST\n
 /resource/123/comments\n
 evaluation=1%C2%B12&test=%252TRUE%25\n
-content-length:69\n
+content-length:65\n
 content-type:text/plain\n
 host:test.com\n
 \n
@@ -235,10 +235,10 @@ bfb541e2301db3522f03fce8248104733842bc5678d0bbf7fcb97f743eb929f3
 
 #### String To Sign
 ```text
-e31906fb8b75a30df06ce2ea369e76d449fdbb7dc4dc9d1108e4f8539c490e21
+a4025649d9b9513fcd7974c39a1ba9f8258df22f52d87eb4b81b3d0230a2ca8e
 ```
 
 #### Signature
 ```text
-44fe20d6e9d666f5a706776ad7b6e668bee72fce6d45ec80acfc4bf7a097bdb3
+52c7597b75682f3f44a036bd860272f9450f77338ca6fb1065c539903507379c
 ```
