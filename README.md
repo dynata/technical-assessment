@@ -29,8 +29,9 @@ Once you have finished your assessment, please have it ready in a way that can b
 If you have any questions about the assessment, please do not hesitate to email the recruiter that has been working with you up to this point. They will ensure that an answer gets back to you from the technical team.
 
 # HTTP Request Signing Protocol
-The following table describes the functions that are used in the definition of the signing protocol.
-You will need to implement code for these functions or use equivalent functions from one or more libraries.
+Following is a protocol definition for signing HTTP request frames. This protocol is capable of signing any HTTP/1.1 request frame that is not using a transfer encoding of "chunked".
+
+The following table describes the functions that are used in the definition of the signing protocol. You will need to implement code for these functions or use equivalent functions from one or more libraries.
 
 | Function                | Description                                                                                                   |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------- |
