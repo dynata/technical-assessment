@@ -226,7 +226,7 @@ host:test.com\n
 ```text
 POST /resource/123/comments?test=%2TRUE%&evaluation=1±2 HTTP/1.1\r\n
 Host: test.com\r\n
-Content-Length: 69\r\n
+Content-Length: 65\r\n
 Content-Type: text/plain\r\n
 \r\n
 this is a sentence.\r\nthis sentence is on a new line.\r\nso is this.
