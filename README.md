@@ -78,7 +78,7 @@ An example request encoded query string:
 ```text
 prefix=somePrefix&marker=some+marker&max-keys=20
 ```
-Would be processed as:
+After decoding, would be processed as:
 ```text
 UriEncode("marker")+"="+UriEncode("some marker")+"&"+
 UriEncode("max-keys")+"="+UriEncode("20")+"&"+
