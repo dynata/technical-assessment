@@ -74,14 +74,14 @@ Where:
 - URI-encode names and values individually. 
 - After encoding, sort the parameters in the canonical query string by parameter name, in ascending order of character code point. For example, a parameter name that begins with the uppercase letter F precedes a parameter name that begins with a lowercase letter b.
 
-An example query string:
+An example request encoded query string:
 ```text
 prefix=somePrefix&marker=some+marker&max-keys=20
 ```
 Would be processed as:
 ```text
 UriEncode("marker")+"="+UriEncode("some marker")+"&"+
-UriEncode("max-keys")+"="+UriEncode("20") + "&" +
+UriEncode("max-keys")+"="+UriEncode("20")+"&"+
 UriEncode("prefix")+"="+UriEncode("somePrefix")
 ```
 Resulting in a canonical query string of:
